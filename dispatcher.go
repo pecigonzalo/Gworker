@@ -2,10 +2,9 @@ package Gworker
 
 // Dispatcher is a work pool handler
 type Dispatcher struct {
-	// A pool of workers channels that are registered with the dispatcher
-	WorkerPool  chan chan Job
-	JobQueue    chan Job // JobQueue is a buffered channel that we can send work requests on
-	PriJobQueue chan Job // PrioJobQueue is a buffered channel that we can send work requests on
+	WorkerPool  chan chan Job // A pool of workers channels that are registered with the dispatcher
+	JobQueue    chan Job      // JobQueue is a buffered channel that we can send work requests on
+	PriJobQueue chan Job      // PrioJobQueue is a buffered channel that we can send work requests on
 }
 
 // NewDispatcher Create a new dispatcher
@@ -21,7 +20,7 @@ func NewDispatcher(
 	}
 }
 
-// Run Worker pool handler
+// Auto generate workers and Run
 func (d *Dispatcher) Auto() {
 	// starting n number of workers
 	for i := 0; i < cap(d.WorkerPool); i++ {
@@ -32,6 +31,7 @@ func (d *Dispatcher) Auto() {
 	go d.Run()
 }
 
+// Run Worker pool handler
 func (d *Dispatcher) Run() {
 	sendToWorker := func(job Job) {
 		// a job request has been received
