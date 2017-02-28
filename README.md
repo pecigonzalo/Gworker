@@ -1,2 +1,2 @@
-# goWorkForMe
-:WIP: A simple threaded golang worker library
+# Gworker
+A simple, threaded golang worker library
